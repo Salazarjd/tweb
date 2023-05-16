@@ -6,7 +6,7 @@ services:
     build:
       context: .
     ports:
-      - 4001:4001
+      - 4001:8080
     networks:
       - proyectos-app
 
