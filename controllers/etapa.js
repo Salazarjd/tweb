@@ -1,24 +1,24 @@
-const TipoProyecto = require('../models/tipoProyecto')
+const Etapa = require('../models/etapa')
 const { request, response} = require('express')
 
 // crear
-const createTipoProyecto= async (req = request, 
+const createEtapa= async (req = request, 
     res = response) => {
     try{
         const nombre = req.body.nombre 
             ? req.body.nombre.toUpperCase()
             : ''
-        const tipoProyectoDB = await TipoProyecto.findOne({nombre})//select * from tipoEquipo where nombre=?
+        const etapaDB = await Etapa.findOne({nombre})//select * from tipoEquipo where nombre=?
         
-        if(tipoProyectoDB){
+        if(etapaDB){
             return res.status(400).json({msg: 'Ya existe'})
         }
         const data = {
             nombre  // nombre: nombre
         }
-        const tipoProyecto = new TipoProyecto(data)
-        await tipoProyecto.save()
-        return res.status(201).json(tipoProyecto)
+        const etapa = new Etapa(data);
+        await etapa.save();
+        return res.status(201).json(etapa);
     }catch(e){
         return res.status(500).json({
             msg: 'Error general ' + e
@@ -27,13 +27,11 @@ const createTipoProyecto= async (req = request,
 }
 
 //listar todos
-const getTipoProyectos = async (req = request, 
+const getEtapas = async (req = request, 
     res = response) => {
         try{
-            // const { tipos } = req.query
-            // const estadosDB = await Estado.find({estado})//select * from estados where estado=?
-            const tipos = await TipoProyecto.find();//select * from estados where estado=?
-            return res.json(tipos)
+            const etapas = await Etapa.find();
+            return res.json(etapas)
         }catch(e){
             return res.status(500).json({
                 msg: 'Error general ' + e
@@ -41,12 +39,12 @@ const getTipoProyectos = async (req = request,
         }
 }
 
-const getTipoProyecto = async (req = request, 
+const getEtapa = async (req = request, 
     res = response) => {
         try{
             const {id} = req.params;
-            const tipo = await TipoProyecto.findById(id);
-            return res.json(tipo)
+            const etapa = await Etapa.findById(id);
+            return res.json(etapa)
         }catch(e){
             return res.status(500).json({
                 msg: 'Error general ' + e
@@ -54,14 +52,14 @@ const getTipoProyecto = async (req = request,
         }
 }
 
-const updateTipoProyectos = async (req = request, 
+const updateEtapa = async (req = request, 
     res = response) => {
         try{
             const {id} = req.params;
             const {nombre} = req.body;
             const fechaActualizacion = Date.now();
-            const tipo = await TipoProyecto.findByIdAndUpdate(id, {nombre, fechaActualizacion}, { new: true });
-            return res.json(tipo)
+            const etapa = await Etapa.findByIdAndUpdate(id, {nombre, fechaActualizacion}, { new: true });
+            return res.json(etapa)
         }catch(e){
             return res.status(500).json({
                 msg: 'Error general ' + e
@@ -70,8 +68,8 @@ const updateTipoProyectos = async (req = request,
 }
 
 module.exports = {
-    createTipoProyecto, 
-    getTipoProyectos,
-    getTipoProyecto,
-    updateTipoProyectos
+    createEtapa, 
+    getEtapas,
+    getEtapa,
+    updateEtapa
 }

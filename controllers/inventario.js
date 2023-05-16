@@ -1,9 +1,5 @@
-const Inventario = require('../models/inventario')
 const { request, response} = require('express')
-const Usuario = require('../models/usuario')
-const Marca = require('../models/marca')
-const Estado = require('../models/estado')
-const TipoEquipo = require('../models/tipoEquipo')
+
 // crear
 const createInventario= async (req = request, 
     res = response) => {
